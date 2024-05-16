@@ -25,6 +25,7 @@ type ColorObject = {
 };
 
 export const tailwindColors: ColorObject = {
+  white: "#ffffff",
   current: "currentColor",
   transparent: "transparent",
   primary: "#1A43D3",

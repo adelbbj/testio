@@ -4,6 +4,10 @@
 
 @layer base {
   html {
-    font-family: var(--font-yekanbakh);
+    font-family: var(--font-shabnam);
+  }
+
+  body {
+    @apply bg-base-50 text-base-content text-xs leading-6 font-light;
   }
 }
