@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { IconStar } from "../../icons/icons";
+import { IconStar } from "../../_components/icons/icons";
 import classNames from "classnames";
 
 export const Rating: FC<{ rate: number | string; className?: string }> = ({

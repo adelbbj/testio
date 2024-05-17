@@ -1,25 +1,20 @@
 import { Card } from "@/app/_components/card";
-import { Rating } from "@/app/_components/products/rating/rating";
 import { ProductSummary } from "@/types/product-post-summary.interface";
-import { FC } from "react";
-import Link from "next/link";
 import { API_URL } from "@/configs/global";
 import { Images } from "../../_components/images";
 import { Actions } from "../../_components/actions";
 import { ProductPrice } from "../../_components/price";
-// import { Card } from "../card";
-// import { Rating } from "./rating/rating";
+import { Rating } from "../../_components/rating";
 
 async function getProduct(id: number): Promise<ProductSummary[]> {
   const res = await fetch(`${API_URL}/products/${id}`, {
-    // next: { revalidate: 24 * 60 * 60 },
     cache: "no-store",
   });
   return res.json();
 }
 
-export default async function Page({ params }) {
-  const product = await getProduct(params.id);
+export default async function Page({ params }: { params: { id: number } }) {
+  const product: any = await getProduct(params.id);
 
   return (
     <article className="container">
@@ -40,7 +35,6 @@ export default async function Page({ params }) {
                 20vw"
           />
         </div>
-        {/* <div className="border border-base-200 w-[1px]" /> */}
 
         <div className="col-span-7 py-10 px-0 flex flex-col gap-y-4 border-r border-base-200">
           <div className="px-5">

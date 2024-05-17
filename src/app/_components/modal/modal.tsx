@@ -1,3 +1,5 @@
+"use client";
+
 import { nextFocus } from "@/hooks/next-focus";
 import { usePortal } from "@/hooks/use-portal";
 import { getFocusableElements } from "@/utils/get-focusable-elements";

@@ -5,23 +5,22 @@ import { ProductOrder } from "./(products)/_components/product-order";
 
 async function getProducts(): Promise<ProductSummary[]> {
   const res = await fetch(`${API_URL}/products`, {
-    // next: { revalidate: 24 * 60 * 60 },
     cache: "no-store",
   });
   return res.json();
 }
 
-const compare = (order) => {
+const compare = (order: "lowest" | "highest") => {
   if (order === "lowest") {
-    return (a, b) => a.price - b.price;
+    return (a: any, b: any) => a.price - b.price;
   }
   if (order === "highest") {
-    return (a, b) => b.price - a.price;
+    return (a: any, b: any) => b.price - a.price;
   }
 };
 
-export default async function Home({ searchParams }) {
-  const newestCoursesData = await getProducts(searchParams.price);
+export default async function Home({ searchParams }: any) {
+  const newestCoursesData = await getProducts();
 
   return (
     <>

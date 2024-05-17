@@ -1,12 +1,10 @@
 import { Card } from "@/app/_components/card";
-import { Rating } from "@/app/_components/products/rating/rating";
 import { ProductSummary } from "@/types/product-post-summary.interface";
 import { FC } from "react";
 import { Images } from "./images";
 import Link from "next/link";
-import { Actions } from "./actions";
-// import { Card } from "../card";
-// import { Rating } from "./rating/rating";
+import { Rating } from "./rating";
+import { ProductPrice } from "./price";
 
 export const Product: FC<ProductSummary> = ({
   id,
@@ -40,9 +38,7 @@ export const Product: FC<ProductSummary> = ({
       <div className="text-black font-bold text-base leading-8">{title}</div>
       <div className="flex justify-between items-center">
         <Rating rate={rating.rate} />
-        <span className="text-primary font-bold text-lg leading-8">
-          {price} تومان
-        </span>
+        <ProductPrice price={price} />
       </div>
     </Card>
   );

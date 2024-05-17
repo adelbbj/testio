@@ -12,7 +12,7 @@ export const ProductOrder = () => {
   const priceOrder = searchParams.get("price");
 
   const createQueryString = useCallback(
-    (name, value) => {
+    (name: any, value: any) => {
       const params = new URLSearchParams(searchParams);
       params.set(name, value);
 
@@ -31,6 +31,7 @@ export const ProductOrder = () => {
 
   useEffect(() => {
     toLowest();
+    // eslint-disable-next-line
   }, []);
 
   return (
