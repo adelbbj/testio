@@ -1,4 +1,5 @@
 "use client";
+
 import { Size } from "../types/size.type";
 import classNames from "classnames";
 import { ButtonProps, ButtonShape } from "./button.types";
@@ -32,6 +33,7 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   className,
   animatedIcon = false,
+  hasBorder = false,
   ...rest
 }: ButtonProps) => {
   const classes = classNames(
@@ -41,6 +43,7 @@ export const Button: React.FC<ButtonProps> = ({
     { [`${sizeClasses[size]}`]: size },
     { "btn-outline": isOutline },
     { "btn-link": isLink },
+    { "btn-bottom-border": hasBorder },
     { [`${shapeClasses[shape]}`]: shape },
     { "animated-icon": animatedIcon },
     { "pointer-events-none opacity-80": isLoading }

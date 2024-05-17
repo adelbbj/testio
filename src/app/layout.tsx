@@ -7,16 +7,6 @@ import { Footer } from "./_components/footer";
 const shabnam = localFont({
   src: [
     {
-      path: "../../public/fonts/shabnam/Shabnam-FD.woff2",
-      weight: "normal",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/shabnam/Shabnam-Bold-FD.woff2",
-      weight: "bold",
-      style: "normal",
-    },
-    {
       path: "../../public/fonts/shabnam/Shabnam-Thin-FD.woff2",
       weight: "100",
       style: "normal",
@@ -27,8 +17,18 @@ const shabnam = localFont({
       style: "normal",
     },
     {
+      path: "../../public/fonts/shabnam/Shabnam-FD.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
       path: "../../public/fonts/shabnam/Shabnam-Medium-FD.woff2",
       weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/shabnam/Shabnam-Bold-FD.woff2",
+      weight: "700",
       style: "normal",
     },
   ],
@@ -44,7 +44,7 @@ export default function RootLayout({
     <html dir="rtl" className={`${shabnam.variable}`}>
       <body className="min-h-screen grid grid-rows-[72px_1fr_auto] dark:bg-base-100 dark:text-base-content">
         <Header />
-        <main>{children}</main>
+        <main className="py-11">{children}</main>
         <Footer />
       </body>
     </html>

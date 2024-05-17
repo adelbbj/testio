@@ -10,7 +10,7 @@ export const BaseIcon: FC<SvgIconType> = ({
   height = 24,
   children,
   viewBox = "0 0 24 24",
-  strokeWidth = "1.5",
+  strokeWidth = "0",
   ...rest
 }) => {
   return (

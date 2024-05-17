@@ -26,6 +26,7 @@ type ColorObject = {
 
 export const tailwindColors: ColorObject = {
   white: "#ffffff",
+  black: "#000000",
   current: "currentColor",
   transparent: "transparent",
   primary: "#1A43D3",
@@ -65,6 +66,9 @@ const config: Config = {
           DEFAULT: "1rem",
           lg: "3rem",
           xl: "4rem",
+        },
+        screens: {
+          max: "1320px",
         },
       },
     },

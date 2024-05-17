@@ -10,4 +10,5 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
     shape?: ButtonShape;
     isLink?: boolean;
     animatedIcon?: boolean;
+    hasBorder?: boolean;
   };
