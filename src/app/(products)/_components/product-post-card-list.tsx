@@ -10,7 +10,7 @@ export const ProductsCardList: React.FC<ProductsCardListProps> = async ({
   products,
 }) => {
   return (
-    <div className="grid grid-cols-12 justify-center xl:justify-start gap-6 mt-10">
+    <div className="grid grid-cols-1 md:grid-cols-12 justify-center xl:justify-start gap-6 mt-10">
       {products?.map((product) => (
         <Product key={`course-${product.id}`} {...product} />
       ))}

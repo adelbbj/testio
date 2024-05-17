@@ -1,5 +1,9 @@
+import { nextFocus } from "@/hooks/next-focus";
+import { usePortal } from "@/hooks/use-portal";
+import { getFocusableElements } from "@/utils/get-focusable-elements";
 import classNames from "classnames";
 import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 const Frame: React.FC<{
   closeOnClickOutside?: boolean;
@@ -7,6 +11,7 @@ const Frame: React.FC<{
   onClose: () => void;
   className?: any;
   open?: boolean;
+  children: React.ReactNode;
 }> = ({
   children,
   closeOnClickOutside = true,
@@ -15,22 +20,52 @@ const Frame: React.FC<{
   onClose,
   open = true,
 }) => {
+  const portal = usePortal();
+  const previousFocus = useRef<HTMLElement | null>(null);
+  const container = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const onKeyPress = (e: KeyboardEvent) => {
-      if (closeOnEsc && open && e.key === "Escape") onClose();
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!open) return;
+
+      switch (e.key) {
+        case "Escape": {
+          if (closeOnEsc) onClose();
+          break;
+        }
+        case "Tab": {
+          e.preventDefault();
+          nextFocus(getFocusableElements(container.current), !e.shiftKey);
+          break;
+        }
+      }
     };
 
-    window.addEventListener("keydown", onKeyPress);
-    return () => window.removeEventListener("keydown", onKeyPress);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [closeOnEsc, onClose, open]);
 
-  const container = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    // aria-hidden
+    document
+      .getElementById("root")
+      ?.setAttribute("aria-hidden", open.toString());
+    portal.current?.setAttribute("aria-hidden", (!open).toString());
+
+    if (open) {
+      previousFocus.current = (document.activeElement as HTMLElement) ?? null;
+      nextFocus(getFocusableElements(container.current));
+    } else {
+      previousFocus.current?.focus?.();
+      previousFocus.current = null;
+    }
+  }, [open, portal]);
+
   const onOverlayClick = (e: React.MouseEvent) => {
     if (!container.current?.contains(e.target as Node)) onClose();
   };
 
-  return (
-    // transparent overlay: `inset-0` to stretch over the entire screen (combines`top-0`, `right-0`, `bottom-0`, and `left-0`)
+  return createPortal(
     <div
       className={classNames(
         "fixed inset-0 z-10 bg-black/60 flex items-center justify-center",
@@ -38,34 +73,28 @@ const Frame: React.FC<{
       )}
       onClick={closeOnClickOutside ? onOverlayClick : undefined}
     >
-      {/* container: `max-w-sm` to make it reasonably narrow, `mx-auto` to center horizontally */}
       <div
         className={classNames("relative mx-auto", className)}
         ref={container}
       >
-        {/* closer in the corner */}
-        {/* <button
-          className="absolute -top-2 -right-2 flex justify-center rounded-full h-8 w-8 bg-gray-600 cursor-pointer shadow-xl"
-          onClick={() => onClose()}
-          title="Bye bye"
-        >
-          <span className="text-2xl leading-7 select-none">&times;</span>
-        </button> */}
-        {/* contents */}
         <div className="overflow-hidden bg-white rounded-[20px]">
           {children}
         </div>
       </div>
-    </div>
+    </div>,
+    portal.current
   );
 };
-
-const Head: React.FC = ({ children }) => (
+const Head: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => (
   <div className="block border-b border-base-200 p-6">
     <h1 className="text-lg font-bold leading-8 text-black">{children}</h1>
   </div>
 );
 
-const Body: React.FC = ({ children }) => <div className=" p-6">{children}</div>;
+const Body: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => <div className=" p-6">{children}</div>;
 
 export const Modal = { Frame, Head, Body };

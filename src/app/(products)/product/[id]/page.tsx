@@ -23,7 +23,7 @@ export default async function Page({ params }) {
 
   return (
     <article className="container">
-      <Card className="!p-0 grid grid-cols-12 !rounded-[20px] relative w-full">
+      <Card className="!p-0 grid grid-cols-1 md:grid-cols-12 !rounded-[20px] relative w-full">
         <div className="absolute top-5 right-5">
           <Actions data={product} />
         </div>
