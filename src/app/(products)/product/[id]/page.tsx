@@ -6,6 +6,7 @@ import Link from "next/link";
 import { API_URL } from "@/configs/global";
 import { Images } from "../../_components/images";
 import { Actions } from "../../_components/actions";
+import { ProductPrice } from "../../_components/price";
 // import { Card } from "../card";
 // import { Rating } from "./rating/rating";
 
@@ -24,7 +25,7 @@ export default async function Page({ params }) {
     <article className="container">
       <Card className="!p-0 grid grid-cols-12 !rounded-[20px] relative w-full">
         <div className="absolute top-5 right-5">
-          <Actions />
+          <Actions data={product} />
         </div>
         <div className="col-span-5 p-12">
           <Images
@@ -44,7 +45,9 @@ export default async function Page({ params }) {
         <div className="col-span-7 py-10 px-0 flex flex-col gap-y-4 border-r border-base-200">
           <div className="px-5">
             <h1 className="font-bold text-xl leading-8">{product.title}</h1>
-            <h6>{product.title}</h6>
+            <h6 className="mt-2 mb-4 text-xs font-normal leading-6">
+              {product.title}
+            </h6>
             <div className="flex flex-row justify-start items-center gap-x-3">
               <Rating
                 rate={product.rating.rate}
@@ -64,8 +67,10 @@ export default async function Page({ params }) {
           <div className="border-b border-base-200 h-[1px]" />
 
           <div className="flex justify-between items-center pt-5 px-5">
-            <span>مبلغ قابل پرداخت:</span>
-            <span>۸۹,۸۵۰,۰۰ تومان</span>
+            <span className="font-medium text-xs">مبلغ قابل پرداخت:</span>
+            <span>
+              <ProductPrice price={product.price} />
+            </span>
           </div>
         </div>
       </Card>

@@ -1,10 +1,7 @@
-import Image from "next/image";
-import { Card } from "./_components/card";
-import { Button } from "./_components/button/button";
-import { Product } from "./_components/products/product";
 import { API_URL } from "@/configs/global";
 import { ProductSummary } from "@/types/product-post-summary.interface";
 import { ProductsCardList } from "./(products)/_components/product-post-card-list";
+import { ProductOrder } from "./(products)/_components/product-order";
 
 async function getProducts(): Promise<ProductSummary[]> {
   const res = await fetch(`${API_URL}/products`, {
@@ -14,32 +11,28 @@ async function getProducts(): Promise<ProductSummary[]> {
   return res.json();
 }
 
-export default async function Home() {
-  const newestCoursesData = await getProducts();
+const compare = (order) => {
+  if (order === "lowest") {
+    return (a, b) => a.price - b.price;
+  }
+  if (order === "highest") {
+    return (a, b) => b.price - a.price;
+  }
+};
+
+export default async function Home({ searchParams }) {
+  const newestCoursesData = await getProducts(searchParams.price);
 
   return (
     <>
       <section className="container mb-6">
-        <OrderButtons />
+        <ProductOrder />
       </section>
       <section className="container">
-        <ProductsCardList products={newestCoursesData} />
+        <ProductsCardList
+          products={newestCoursesData.sort(compare(searchParams.price))}
+        />
       </section>
     </>
   );
 }
-
-const OrderButtons = () => {
-  return (
-    <Card className="px-4">
-      <div className="flex justify-start items-center gap-x-8 py-2">
-        <div className="text-sm font-medium" role="button">
-          ارزانترین
-        </div>
-        <div className="text-sm font-bold" role="button">
-          گران‌ترین
-        </div>
-      </div>
-    </Card>
-  );
-};

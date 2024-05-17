@@ -1,8 +1,10 @@
 import localFont from "next/font/local";
+import { Toaster } from "react-hot-toast";
 
-import "./globals.css";
 import { Header } from "./_components/header";
 import { Footer } from "./_components/footer";
+
+import "./globals.css";
 
 const shabnam = localFont({
   src: [
@@ -46,6 +48,7 @@ export default function RootLayout({
         <Header />
         <main className="py-11">{children}</main>
         <Footer />
+        <Toaster />
       </body>
     </html>
   );

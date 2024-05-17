@@ -5,11 +5,13 @@ const Frame: React.FC<{
   closeOnClickOutside?: boolean;
   closeOnEsc?: boolean;
   onClose: () => void;
+  className?: any;
   open?: boolean;
 }> = ({
   children,
   closeOnClickOutside = true,
   closeOnEsc = true,
+  className,
   onClose,
   open = true,
 }) => {
@@ -37,7 +39,10 @@ const Frame: React.FC<{
       onClick={closeOnClickOutside ? onOverlayClick : undefined}
     >
       {/* container: `max-w-sm` to make it reasonably narrow, `mx-auto` to center horizontally */}
-      <div className="relative w-full max-w-sm mx-auto" ref={container}>
+      <div
+        className={classNames("relative mx-auto", className)}
+        ref={container}
+      >
         {/* closer in the corner */}
         {/* <button
           className="absolute -top-2 -right-2 flex justify-center rounded-full h-8 w-8 bg-gray-600 cursor-pointer shadow-xl"
@@ -47,7 +52,7 @@ const Frame: React.FC<{
           <span className="text-2xl leading-7 select-none">&times;</span>
         </button> */}
         {/* contents */}
-        <div className="overflow-hidden bg-white rounded-[20px] p-6">
+        <div className="overflow-hidden bg-white rounded-[20px]">
           {children}
         </div>
       </div>
@@ -56,11 +61,11 @@ const Frame: React.FC<{
 };
 
 const Head: React.FC = ({ children }) => (
-  <div className="block">
-    <h1 className="text-lg font-bold leading-8">{children}</h1>
+  <div className="block border-b border-base-200 p-6">
+    <h1 className="text-lg font-bold leading-8 text-black">{children}</h1>
   </div>
 );
 
-const Body: React.FC = ({ children }) => <div className="mt-8">{children}</div>;
+const Body: React.FC = ({ children }) => <div className=" p-6">{children}</div>;
 
 export const Modal = { Frame, Head, Body };

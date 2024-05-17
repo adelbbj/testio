@@ -1,0 +1,14 @@
+.textbox {
+  @apply flex-shrink placeholder-base-content placeholder-opacity-50;
+  @apply bg-transparent text-black font-medium text-sm leading-5;
+
+  &:focus {
+    @apply outline-none;
+  }
+
+  &-disabled,
+  &:disabled,
+  &[disabled] {
+    @apply cursor-not-allowed border-base-200 bg-base-200 text-opacity-20 placeholder-base-content placeholder-opacity-20;
+  }
+}
